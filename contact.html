@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Central Tool Specialties | Precision Electrical Connectors</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        :root {
+            --primary-blue: #004a99;
+            --accent-copper: #d97706;
+            --bg-dark: #0f172a;
+            --white: #ffffff;
+            --font-main: 'Inter', sans-serif;
+            --font-head: 'Oswald', sans-serif;
+            --metal-grey: #94a3b8;
+            --fastener-silver: #d1d5db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- ENHANCED REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10000;
+            height: 80px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo img { height: 45px; }
+
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav a { 
+            text-decoration: none; 
+            color: #334155; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.85rem;
+        }
+
+        /* --- HEXAGON TOGGLE --- */
+        .nav-toggle {
+            width: 45px;
+            height: 45px;
+            background: var(--metal-grey);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10001;
+        }
+
+        .nav-toggle span {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: 0.4s;
+        }
+
+        .nav-toggle .line-1 { transform: translateY(-6px); }
+        .nav-toggle .line-3 { transform: translateY(6px); }
+
+        .nav-toggle.open { transform: rotate(180deg); background: var(--primary-blue); }
+        .nav-toggle.open .line-1 { transform: rotate(45deg); }
+        .nav-toggle.open .line-2 { opacity: 0; }
+        .nav-toggle.open .line-3 { transform: rotate(-45deg); }
+
+        /* --- HERO SLIDER --- */
+        
+        /* --- MOBILE --- */
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            transform: translateX(100%);
+            transition: 0.5s;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { color: white; font-size: 2rem; text-decoration: none; font-family: var(--font-head); }
+        .mobile-nav a:hover { color: var(--accent-copper); padding-left: 5px; }
+        @media (max-width: 992px) {
+            nav { display: none; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* --- FOOTER STYLES --- */
+.main-footer {
+    background: var(--bg-dark);
+    color: white;
+    padding: 80px 5% 20px;
+    margin-top: 50px;
+    border-top: 4px solid var(--accent-copper);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-brand p {
+    color: var(--metal-grey);
+    margin: 20px 0;
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.footer-logo {
+    height: 40px;
+    filter: brightness(0) invert(1); /* Makes the logo white for the dark background */
+}
+
+.iso-badge {
+    display: inline-block;
+    border: 1px solid var(--accent-copper);
+    color: var(--accent-copper);
+    padding: 5px 15px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.footer-grid h4 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: var(--metal-grey);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-copper);
+    padding-left: 5px;
+}
+
+.footer-contact p {
+    color: var(--metal-grey);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.footer-contact strong {
+    color: white;
+}
+
+.footer-bottom {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-brand p {
+        margin: 20px auto;
+    }
+}
+/* --- INDUSTRIAL BASE --- */
+.contact-page {
+    background-color: #111827; /* Deep Charcoal */
+    color: #e5e7eb;
+    padding-bottom: 100px;
+}
+
+.content-gate {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEAVY HEADER --- */
+.industrial-header {
+    padding: 80px 0 40px;
+    text-align: center;
+}
+
+.heavy-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: -2px;
+}
+
+.heavy-title .accent {
+    color: #fbbf24; /* Copper/Gold Caution color */
+}
+
+.steel-divider {
+    width: 100px;
+    height: 8px;
+    background: #004a99; /* Primary Blue */
+    margin: 10px auto;
+}
+
+/* --- THE SLAB (The Main Container) --- */
+.contact-slab {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #1f2937;
+    border: 4px solid #374151; /* Thick "Frame" */
+    box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.4); /* Solid block shadow */
+    overflow: hidden;
+}
+
+.slab-info {
+    padding: 60px 40px;
+    border-right: 4px solid #374151;
+}
+
+.slab-heading {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.address {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    color: #9ca3af;
+}
+
+.slab-stats {
+    margin-bottom: 40px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #fbbf24;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* --- THE BUTTON (Heavy Duty) --- */
+.industrial-btn {
+    display: inline-block;
+    background: #004a99;
+    color: #fff;
+    text-decoration: none;
+    padding: 20px 40px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    border: none;
+    transition: transform 0.1s, background 0.3s;
+    box-shadow: 0 6px 0 #002e60; /* Button thickness shadow */
+}
+
+.industrial-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.industrial-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* --- THE MAP SIDE --- */
+.slab-map {
+    min-height: 450px;
+}
+
+.slab-map iframe {
+    filter: grayscale(1) contrast(1.2) opacity(0.8); /* Gritty Map Look */
+}
+
+/* Mobile Fix */
+@media (max-width: 850px) {
+    .contact-slab { grid-template-columns: 1fr; }
+    .slab-info { border-right: none; border-bottom: 4px solid #374151; }
+    .heavy-title { font-size: 3rem; }
+}
+#map { 
+    width: 100%;
+    min-height: 450px; /* Forces it to show up */
+    height: 100%;
+    background: #0b0f1a; /* Matches your background while loading */
+}
+
+/* Ensure the Leaflet controls aren't hidden */
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+}
+
+/* Gritty Industrial Filter for the Map Tiles */
+.leaflet-tile-container {
+    filter: grayscale(100%) invert(100%) contrast(90%) brightness(90%);
+}
+
+.leaflet-container {
+    background: #111827 !important;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html">
+        <div class="logo"><img src="CTSlogo.png" alt="Logo"/></div></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="industries.html">Industries</a></li>
+                <li><a href="equipmentcapabilities.html">Capabilities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" id="navToggle">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="industries.html">Industries</a>
+        <a href="equipmentcapabilities.html">Capabilities</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <main class="contact-page">
+    <section class="industrial-header">
+        <div class="content-gate">
+            <h1 class="heavy-title">Contact <span class="accent">Us</span></h1>
+            <div class="steel-divider"></div>
+        </div>
+    </section>
+
+    <section class="contact-main">
+        <div class="content-gate">
+            
+            <div class="contact-slab">
+                <div class="slab-info">
+                    <h2 class="slab-heading">Central Tool Specialties</h2>
+                    <p class="address">
+                        1140 N. Dupage Ave,<br>
+                        Lombard, Illinois 60148
+                    </p>
+                    
+                    <div class="slab-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">OFFICE PHONE</span>
+                            <span class="stat-value">(630) 543-6351</span>
+                        </div>
+                    </div>
+
+                    <a href="mailto:zach@centraltoolspecialties.com" class="industrial-btn">
+                        REQUEST A QUOTE
+                    </a>
+                </div>
+
+                <div class="slab-map">
+                    <div class="slab-map">
+    <div id="map"></div>
+</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+    <footer class="main-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <img src="CTSlogo.png" alt="CTS Logo" class="footer-logo">
+            <p>Precision electrical connectors and copper components. Engineered for excellence since 1978.</p>
+            <div class="iso-badge">ISO 9001:2015 CERTIFIED</div>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Products</a></li>
+                <li><a href="contact.html">Request a Quote</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><strong>Address:</strong> 123 Precision Way,<br>Lombard, IL 60148</p>
+            <p><strong>Phone:</strong><a href="tel:(630)543-6351">(630) 543-6351</a></p>
+            <p><strong>Email:</strong> sales@centraltool.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Central Tool Specialties. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    <script>
+        const toggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            mobileNav.classList.toggle('active');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const counter = entry.target.querySelector('.count');
+                    if (counter) startCounter(counter);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function startCounter(el) {
+            if (el.classList.contains('counted')) return;
+            el.classList.add('counted');
+            const target = +el.getAttribute('data-target');
+            let current = 0;
+            const update = () => {
+                current += target / 100;
+                if (current < target) {
+                    el.innerText = Math.ceil(current);
+                    requestAnimationFrame(update);
+                } else {
+                    el.innerText = target;
+                }
+            };
+            update();
+        }
+
+        // 3D Tilt Logic
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateX = (y - (rect.height/2)) / 12;
+                const rotateY = ((rect.width/2) - x) / 12;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = `rotateX(0) rotateY(0)`);
+        });
+        // Coordinates for 1140 N. Dupage Ave, Lombard, IL
+document.addEventListener('DOMContentLoaded', function() {
+    // Precise coordinates for 1140 N. Dupage Ave, Lombard
+    const lat = 41.91079;
+    const lng = -88.01999;
+
+    const map = L.map('map', {
+        scrollWheelZoom: false,
+        zoomControl: true
+    }).setView([lat, lng], 15);
+
+    // Using Standard OSM tiles with our CSS "Blueprint" filter applied above
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Custom "Steel & Copper" Marker
+    const industrialMarker = L.divIcon({
+        className: 'marker-box',
+        html: `<div style="
+            width: 14px; 
+            height: 14px; 
+            background: #fbbf24; 
+            border: 3px solid #004a99; 
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+            border-radius: 2px;"></div>`,
+        iconSize: [20, 20]
+    });
+
+    L.marker([lat, lng], { icon: industrialMarker }).addTo(map)
+        .bindPopup(`
+            <div style="font-family: 'Oswald', sans-serif; text-transform: uppercase;">
+                <b style="color: #004a99;">Central Tool Specialties</b><br>
+                <span style="color: #666;">1140 N. Dupage Ave.</span>
+            </div>
+        `)
+        .openPopup();
+
+    // The Fix: Force the map to "wake up" and see its container size
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 300);
+});
+    
+    </script>
+</body>
+</html>

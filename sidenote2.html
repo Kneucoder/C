@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rope Braided Connectors | Central Tool Specialties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #004a99;
+            --accent-copper: #d97706;
+            --bg-dark: #0f172a;
+            --white: #ffffff;
+            --font-main: 'Inter', sans-serif;
+            --font-head: 'Oswald', sans-serif;
+            --metal-grey: #94a3b8;
+            --fastener-silver: #d1d5db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- 3D BACKGROUND --- */
+        #braid-viewer-section {
+            position: fixed;
+            top: 80px; /* Below Header */
+            left: 0;
+            width: 100vw;
+           
+           
+            cursor: grab;
+            background: #ffffff;
+            height: 50vh; /* Give it half the screen height on mobile */
+        z-index: 5;    /* Keep it accessible */
+        }
+        #braid-viewer-section:active { cursor: grabbing; }
+
+        /* --- REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            height: 80px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .logo img { height: 45px; }
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav a { text-decoration: none; color: #334155; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; }
+
+        /* HEXAGON TOGGLE */
+        .nav-toggle {
+            width: 45px; height: 45px;
+            background: var(--metal-grey);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: none; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.6s; position: relative; z-index: 2001;
+        }
+        .nav-toggle span { position: absolute; width: 20px; height: 2px; background: white; transition: 0.4s; }
+        .nav-toggle .line-1 { transform: translateY(-6px); }
+        .nav-toggle .line-3 { transform: translateY(6px); }
+        .nav-toggle.open { transform: rotate(180deg); background: var(--primary-blue); }
+        .nav-toggle.open .line-1 { transform: rotate(45deg); }
+        .nav-toggle.open .line-2 { opacity: 0; }
+        .nav-toggle.open .line-3 { transform: rotate(-45deg); }
+
+        .mobile-nav {
+            position: fixed; inset: 0; background: var(--bg-dark); z-index: 1500;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: 20px; transform: translateY(-100%); transition: 0.5s;
+        }
+        .mobile-nav.active { transform: translateY(0); }
+        .mobile-nav a { color: white; text-decoration: none; font-size: 1.5rem; font-family: var(--font-head); text-transform: uppercase; }
+
+        /* --- CONTENT WRAPPER --- */
+        .page-content {
+            position: relative;
+            z-index: 10;
+            margin-top: 70vh; /* Push content down to show 3D */
+           background: rgba(255, 255, 255, 0.7); 
+    /* This blurs the 3D braid behind the text so the words remain easy to read */
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    padding: 80px 5% 0;
+    border-top: 6px solid var(--accent-copper);
+
+
+        }
+
+        .section-container { max-width: 1100px; margin: 0 auto 100px; }
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .img-card { 
+    background: rgba(255, 255, 255, 0.6); 
+    border: 1px solid var(--fastener-silver); 
+    border-radius: 4px; 
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+}
+
+.img-card img { 
+    width: 100%; 
+    /* Changed from fixed 250px to auto so it scales naturally */
+    height: auto; 
+    /* Ensures the full engineering drawing is visible without cropping */
+    object-fit: contain; 
+    background: #fff; /* White background behind the diagram for clarity */
+    padding: 10px;    /* Adds a "safety zone" around the technical drawing */
+}
+
+.img-card p { 
+    padding: 15px; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    font-size: 0.8rem; 
+    background: rgba(241, 245, 249, 0.9);
+    border-top: 1px solid var(--fastener-silver);
+}
+        h2 { font-family: var(--font-head); font-size: 2.5rem; text-transform: uppercase; margin-bottom: 25px; color: var(--bg-dark); }
+        .info-text { font-size: 1.1rem; line-height: 1.8; color: #475569; margin-bottom: 40px; }
+
+        /* --- ACCORDION --- */
+        .accordion { border-top: 1px solid var(--fastener-silver); }
+        .acc-item { border-bottom: 1px solid var(--fastener-silver); }
+        .acc-btn { 
+            width: 100%; padding: 25px; background: none; border: none; text-align: left;
+            font-family: var(--font-head); font-size: 1.2rem; text-transform: uppercase;
+            display: flex; justify-content: space-between; cursor: pointer; color: var(--primary-blue);
+        }
+        .acc-content { max-height: 0; overflow: hidden; transition: 0.4s ease-out; background: #fff; }
+        .acc-content p { padding: 0 25px 25px; color: #64748b; line-height: 1.6; }
+
+        /* --- CATALOG NAV --- */
+        .catalog-strip { 
+            background: var(--bg-dark); padding: 60px 5%; margin-top: 80px; color: white;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+        }
+        .cat-link { 
+            padding: 15px 30px; border: 1px solid var(--metal-grey); text-decoration: none; 
+            color: white; font-weight: 700; text-transform: uppercase; transition: 0.3s;
+        }
+        .cat-link:hover { background: var(--accent-copper); border-color: var(--accent-copper); }
+
+        /* --- FOOTER --- */
+        footer { background: #0a0f1c; color: #94a3b8; padding: 60px 5%; border-top: 4px solid var(--accent-copper); text-align: center; }
+
+        @media (max-width: 992px) {
+            nav { display: none; }
+            .nav-toggle { display: flex; }
+            .page-content { margin-top: 30vh; }
+        }
+        /* --- FIDGET LABEL STYLES --- */
+.fidget-label {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    pointer-events: none; /* Allows clicks to pass through to the 3D braid */
+}
+
+.fidget-label h1 {
+    font-family: var(--font-head);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    letter-spacing: 2px;
+    margin: 5px 0;
+}
+
+.accent-tag {
+    background: var(--accent-copper);
+    color: white;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 2px;
+}
+
+.fidget-label p {
+    font-size: 0.8rem;
+    color: var(--metal-grey);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* --- MOBILE SPECIFIC FIXES --- */
+@media (max-width: 992px) {
+    #braid-viewer-section {
+        height: 60vh; /* Increased height for mobile fidgeting */
+        top: 80px;
+        z-index: 5;
+    }
+
+    .fidget-label h1 {
+        font-size: 1.8rem;
+    }
+
+    .page-content {
+        margin-top: 60vh; /* Matches the viewer height */
+        background: rgba(255, 255, 255, 0.7); 
+        position: relative;
+        z-index: 20;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo"><img src="CTSlogo.png" alt="CTS Logo"/></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="industries.html">Industries</a></li>
+                <li><a href="equipmentcapabilities.html">Capabilities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" id="navToggle">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="industries.html">Industries</a>
+        <a href="equipmentcapabilities.html">Capabilities</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    
+   <div id="braid-viewer-section">
+    <div class="fidget-label">
+        <span class="accent-tag">Interactive</span>
+        <h1>Rope Braid Fidget</h1>
+        <p>Click and drag to inspect</p>
+    </div>
+</div>
+
+    <main class="page-content">
+        <div class="section-container">
+            <h2 class="reveal">Rope Braided Flexible Connectors</h2>
+            <p class="info-text reveal">
+                Central Tool Specialties manufactures rope braided flexible connectors to customer specifications and drawings. 
+                Ideal for connections with limited space availability, these connectors excel in horizontal flexibility applications, 
+                flexing equally in all directions. They are an industry standard for damping vibrations in complex electrical machinery.
+            </p>
+
+            <div class="image-grid reveal">
+                <div class="img-card">
+                    <img src="ropebraiddiagram.jpg" alt="Technical Diagram">
+                    <p>Engineering Specifications</p>
+                </div>
+                <div class="img-card">
+                    <img src="ropebraids.jpg" alt="Finished Rope Braid">
+                    <p>Industrial Rope Braids</p>
+                </div>
+                <div class="img-card">
+                    <img src="homeimg4.jpg" alt="Application Use">
+                    <p>Assembly & Integration</p>
+                </div>
+            </div>
+
+            <div class="accordion reveal">
+                <div class="acc-item">
+                    <button class="acc-btn">Applications & Usage <span>+</span></button>
+                    <div class="acc-content">
+                        <p>Typically used in welding and power equipment, and for electrical components such as switches, robots, and high-motion assembly line equipment. Their omni-directional flex makes them ideal for vibration-heavy environments.</p>
+                    </div>
+                </div>
+                <div class="acc-item">
+                    <button class="acc-btn">Plating & Finishes <span>+</span></button>
+                    <div class="acc-content">
+                        <p>We provide multiple plating options to ensure longevity and conductivity, including Tin, Nickel, Silver, and Bare Copper, based on your environmental requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="catalog-strip reveal">
+            <a href="fasteners.html" class="cat-link">Fasteners</a>
+            <a href="flat-braid.html" class="cat-link">Flat Braided</a>
+            <a href="rope-braid.html" class="cat-link" style="background: var(--accent-copper);">Rope Braided</a>
+            <a href="laminations.html" class="cat-link">Laminations</a>
+            <a href="copper-bus-bar.html" class="cat-link">Copper Bus Bar</a>
+        </div>
+
+        <footer>
+            <img src="CTSlogo.png" style="height:30px; filter:brightness(0) invert(1); margin-bottom:20px;">
+            <p>© 2026 Central Tool Specialties. All Rights Reserved.</p>
+            <p>Lombard, IL 60148 | (630) 543-6351</p>
+        </footer>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        // 1. THREE.JS INITIALIZATION
+        const container = document.getElementById('braid-viewer-section');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+
+        const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 10, 35);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 1.5;
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enableZoom = true; // Zoom disabled to prevent scroll interference
+        controls.autoRotate = true; // Optional: Makes the braid spin slowly on its own
+
+        // Lighting
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5); 
+        scene.add(hemiLight);
+        const topLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        topLight.position.set(5, 15, 10);
+        scene.add(topLight);
+
+        // Materials
+        const redBraidMat = new THREE.MeshStandardMaterial({ color: 0xee0000, metalness: 0.5, roughness: 0.4 });
+        const silverMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.8, roughness: 0.3 });
+
+        // Terminals
+        function createTerm() {
+            const s = new THREE.Shape();
+            s.moveTo(-2.25, -2.25); s.lineTo(2.25, -2.25); s.lineTo(2.25, 2.25); s.lineTo(-2.25, 2.25); s.lineTo(-2.25, -2.25);
+            const h = new THREE.Path();
+            h.moveTo(-0.7, -0.7); h.lineTo(0.7, -0.7); h.lineTo(0.7, 0.7); h.lineTo(-0.7, 0.7); h.lineTo(-0.7, -0.7);
+            s.holes.push(h);
+            const geo = new THREE.ExtrudeGeometry(s, { depth: 0.5, bevelEnabled: false });
+            geo.rotateX(Math.PI / 2);
+            return new THREE.Mesh(geo, silverMat);
+        }
+        const lTerm = createTerm(); lTerm.position.x = -12; scene.add(lTerm);
+        const rTerm = createTerm(); rTerm.position.x = 12; scene.add(rTerm);
+
+        // Braid
+        const strandCount = 20;
+        for (let i = 0; i < strandCount; i++) {
+            const points = [];
+            const offset = (i / strandCount) * Math.PI * 2;
+            const isCW = i % 2 === 0;
+            for (let j = 0; j <= 100; j++) {
+                const p = j / 100;
+                const x = (p * 20.5) - 10.25;
+                const t = Math.abs((p - 0.5) * 2);
+                const expansion = 1.2 + (Math.pow(t, 2) * 1.0);
+                const flattening = 1.0 - (Math.pow(t, 2) * 0.4);
+                const angle = (p * Math.PI * 2 * 10 * (isCW ? 1 : -1)) + offset;
+                points.push(new THREE.Vector3(x, Math.sin(angle) * flattening, Math.cos(angle) * expansion));
+            }
+            const curve = new THREE.CatmullRomCurve3(points);
+            scene.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 100, 0.25, 8, false), redBraidMat));
+        }
+
+        function animate() { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
+        animate();
+
+        // 2. UI LOGIC
+        const toggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Reveal Logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Accordion Logic
+        document.querySelectorAll('.acc-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+                this.querySelector('span').innerText = content.style.maxHeight ? '-' : '+';
+            });
+        });
+
+        window.addEventListener('resize', () => {
+           const width = container.clientWidth;
+    const height = container.clientHeight;
+    
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+        });
+    </script>
+</body>
+</html>

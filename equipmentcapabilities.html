@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Central Tool Specialties | Precision Electrical Connectors</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
+    
+    <style>
+        :root {
+            --primary-blue: #004a99;
+            --accent-copper: #d97706;
+            --bg-dark: #0f172a;
+            --white: #ffffff;
+            --font-main: 'Oswald', sans-serif;
+            --font-head: 'Oswald', sans-serif;
+            --metal-grey: #94a3b8;
+            --fastener-silver: #d1d5db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- ENHANCED REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo img { height: 45px; }
+
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav a { 
+            text-decoration: none; 
+            color: #334155; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* --- HEXAGON TOGGLE --- */
+        .nav-toggle {
+            width: 45px;
+            height: 45px;
+            background: var(--metal-grey);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: 0.4s;
+        }
+
+        .nav-toggle .line-1 { transform: translateY(-6px); }
+        .nav-toggle .line-3 { transform: translateY(6px); }
+
+        .nav-toggle.open { transform: rotate(180deg); background: var(--primary-blue); }
+        .nav-toggle.open .line-1 { transform: rotate(45deg); }
+        .nav-toggle.open .line-2 { opacity: 0; }
+        .nav-toggle.open .line-3 { transform: rotate(-45deg); }
+
+        /* --- HERO SLIDER --- */
+
+        /* --- MOBILE --- */
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            transform: translateX(100%);
+            transition: 0.5s;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { color: white; font-size: 2rem; text-decoration: none; font-family: var(--font-head); }
+        .mobile-nav a:hover { color: var(--accent-copper); padding-left: 5px; }
+        @media (max-width: 992px) {
+            nav { display: none; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* --- FOOTER STYLES --- */
+.main-footer {
+    background: var(--bg-dark);
+    color: white;
+    padding: 80px 5% 20px;
+    margin-top: 1px;
+    border-top: 4px solid var(--accent-copper);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-brand p {
+    color: var(--metal-grey);
+    margin: 20px 0;
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.footer-logo {
+    height: 40px;
+    filter: brightness(0) invert(1); /* Makes the logo white for the dark background */
+}
+
+.iso-badge {
+    display: inline-block;
+    border: 1px solid var(--accent-copper);
+    color: var(--accent-copper);
+    padding: 5px 15px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.footer-grid h4 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: var(--metal-grey);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-copper);
+    padding-left: 5px;
+}
+
+.footer-contact p {
+    color: var(--metal-grey);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.footer-contact strong {
+    color: white;
+}
+
+.footer-bottom {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-brand p {
+        margin: 20px auto;
+    }
+}
+/* --- LAYOUT & THEME --- */
+
+.capabilities-page {
+    background-color: #fdfcfc;
+    position: relative;
+    color: #94a3b8;
+    padding-bottom: 100px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%231e293b' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 80px 140px; /* Size of the hexagons */
+    background-position: 0 0, 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+.capabilities-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, #1a1b2c 90%);
+    pointer-events: none;
+    z-index: 0;
+}
+.content-gate {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- HERO REBUILD --- */
+.blueprint-hero {
+    padding: 120px 0 60px 0;
+    background: radial-gradient(circle at center, rgba(168, 85, 247, 0.03) 0%, transparent 70%);
+    border-bottom: 1px solid #1e293b;
+    position: relative;
+    overflow: hidden;
+}
+.hero-center-gate {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Breaks the left-align narrative */
+    text-align: center;
+}
+.hero-top-meta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    font-family: Oswald, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+.status-indicator {
+    color: #c56322; /* Active Green */
+}
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+.hero-title-group {
+    max-width: 750px;
+    margin-bottom: 60px;
+    z-index: 10;
+}
+.hero-visual-frame {
+    position: relative;
+    width: 100%;
+    padding: 15px;
+}
+.visual-inner {
+    position: relative;
+    border: 1px solid #334155;
+    background: #0f172a;
+    padding: 10px;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+}
+.main-visual {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: contrast(1.1);
+}
+.floating-spec-badge {
+    position: absolute;
+    bottom: -20px;
+    right: 40px;
+    background: #f7b655;
+    color: #fff;
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+}
+
+.spec-label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+.spec-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* --- ARCHITECTURAL ACCENTS --- */
+.corner-accents {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #f7a655;
+    pointer-events: none;
+}
+.top-left {
+    top: 0; left: 0;
+    border-right: none; border-bottom: none;
+}
+
+.bottom-right {
+    bottom: 0; right: 0;
+    border-left: none; border-top: none;
+}
+.outline-purple {
+    -webkit-text-stroke: 1px #ffffff;
+    color: #f7a655;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-size: 4.5rem;
+}
+
+/* --- CAPABILITY CARD --- */
+.capability-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    margin-top: -60px;
+    padding: 50px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.lead {
+    font-size: 1.25rem;
+    color: #f1f5f9;
+    margin-bottom: 20px;
+}
+
+.process-dots {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.process-dots li::before {
+    content: "●";
+    color: #f7b455;
+    margin-right: 10px;
+    font-size: 0.8rem;
+}
+
+/* --- MINI GALLERY --- */
+.image-grid-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.image-grid-mini img {
+    width: 100%;
+    border: 1px solid #334155;
+    filter: grayscale(30%);
+    transition: 0.3s;
+}
+
+.image-grid-mini img:hover {
+    filter: grayscale(0%);
+    transform: translateX(-5px);
+}
+
+/* --- EQUIPMENT GRID --- */
+.equipment-inventory {
+    padding: 100px 0;
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.glass-card {
+    backdrop-filter: blur(10px);
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid #1e293b;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    color: #f7b655;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.tech-specs {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.tech-specs li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.tech-specs li span {
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .card-body, .equipment-grid { grid-template-columns: 1fr; }
+    .blueprint-hero { padding: 60px 0; }
+}
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: #ff9900;
+    margin: 20px auto;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html">
+        <div class="logo"><img src="CTSlogo.png" alt="Logo"/></div></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="industries.html">Industries</a></li>
+                <li><a href="equipmentcapabilities.html">Capabilities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" id="navToggle">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="industries.html">Industries</a>
+        <a href="equipmentcapabilities.html">Capabilities</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    
+<main class="capabilities-page">
+    <section class="blueprint-hero">
+    <div class="hero-center-gate">
+        <div class="hero-top-meta">
+            <span class="serial-no"></span>
+            <span class="status-indicator">●</span>
+        </div>
+
+        <div class="hero-title-group">
+            <h1 class="headline outline-purple">Capabilities <span class="white" style="color: white;">&</span> Equipment</h1>
+            <div class="title-underline"></div>
+            <p class="hero-subtitle">High-precision metal stamping, waterjet cutting, and specialized bending for the global electrical infrastructure sector.</p>
+        </div>
+
+        <div class="hero-visual-frame">
+            <div class="visual-inner">
+                <img src="flow13.jpg" alt="Waterjet" class="main-visual">
+                <div class="floating-spec-badge">
+                    <span class="spec-label">PRIMARY UNIT</span>
+                    <span class="spec-value">FLOW MACH3 / 55K PSI</span>
+                </div>
+            </div>
+            <div class="corner-accents top-left"></div>
+            <div class="corner-accents bottom-right"></div>
+        </div>
+    </div>
+</section>
+
+    <section class="info-section">
+        <div class="content-gate">
+            <div class="capability-card">
+                <div class="card-header">
+                    <h2>Metal Stamping</h2>
+                </div>
+                <div class="card-body">
+                    <div class="text-content">
+                        <p class="lead">Central Tool Specialties manufactures sundry punch press stampings up to <strong>3/8” in thickness</strong>.</p>
+                        <p>Our expertise spans the production of high-tolerance plates, contacts, and bushings specifically engineered for <strong>module gas switches</strong>. We also specialize in custom bus bars, protective covers, and heavy-duty brackets for the electrical industry.</p>
+                        
+                        <div class="secondary-info">
+                            <h4>Full Vertical Integration</h4>
+                            <p>To ensure total quality control, all secondary operations are performed in-house, including:</p>
+                            <ul class="process-dots">
+                                <li>Extruding & Drawing</li>
+                                <li>Precision Drilling</li>
+                                <li>High-Speed Tapping</li>
+                                <li>Complex Bending</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="visual-content">
+                        <div class="image-grid-mini">
+                            <img src="CToolimg.jpg" alt="Stamped Metal Plates">
+                            <img src="CToolimg1.jpg" alt="Stamped Metal Parts">
+                            <img src="CToolimg2.jpg" alt="Terminal Strips">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="equipment-inventory">
+        <div class="content-gate">
+            <div class="section-heading">
+                <h2 class="outline-purple">Product Machinery</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="glass-card">
+                    <div class="card-label">BENDING</div>
+                    <h3>Mitsubishi Diamond Elite 1203</h3>
+                    <ul class="tech-specs">
+                        <li><span>Max Bend Length</span> 2600mm</li>
+                        <li><span>Bending Capacity</span> 80T</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-label">CUTTING</div>
+                    <h3>Flow Mach3 2513b</h3>
+                    <ul class="tech-specs">
+                        <li><span>Max Pressure</span> 55k PSI</li>
+                        <li><span>Table Dimensions</span> 1300mm x 2500mm</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-label">WELDING</div>
+                    <h3>Sciaky EPT 420018</h3>
+                    <ul class="tech-specs">
+                        <li><span>Power Output</span> 200KVA</li>
+                        <li><span>Type</span> Press Welder</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-label">STAMPING</div>
+                    <h3>Punch Press Fleet</h3>
+                    <ul class="tech-specs">
+                        <li><span>Max Capacity</span> 400 Tons</li>
+                        <li><span>Thickness Range</span> Up to 3/8"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+    <footer class="main-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <img src="CTSlogo.png" alt="CTS Logo" class="footer-logo">
+            <p>Precision electrical connectors and copper components. Engineered for excellence since 1978.</p>
+            <div class="iso-badge">ISO 9001:2015 CERTIFIED</div>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Products</a></li>
+                <li><a href="contact.html">Request a Quote</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><strong>Address:</strong> 1140 N. Dupage Ave,<br>Lombard, IL 60148</p>
+            <p><strong>Phone:</strong><a href="tel:(630)543-6351">(630) 543-6351</a></p>
+            <p><strong>Email:</strong> sales@centraltool.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Central Tool Specialties. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    <script>
+        const toggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            mobileNav.classList.toggle('active');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const counter = entry.target.querySelector('.count');
+                    if (counter) startCounter(counter);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function startCounter(el) {
+            if (el.classList.contains('counted')) return;
+            el.classList.add('counted');
+            const target = +el.getAttribute('data-target');
+            let current = 0;
+            const update = () => {
+                current += target / 100;
+                if (current < target) {
+                    el.innerText = Math.ceil(current);
+                    requestAnimationFrame(update);
+                } else {
+                    el.innerText = target;
+                }
+            };
+            update();
+        }
+
+        // 3D Tilt Logic
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateX = (y - (rect.height/2)) / 12;
+                const rotateY = ((rect.width/2) - x) / 12;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = `rotateX(0) rotateY(0)`);
+        });
+    </script>
+</body>
+</html>

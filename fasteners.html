@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Central Tool Specialties | Precision Electrical Connectors</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
+
+
+<style>
+  :root {
+            --primary-blue: #004a99;
+            --accent-copper: #d97706;
+            --bg-dark: #0f172a;
+            --white: #ffffff;
+            --font-main: 'Inter', sans-serif;
+            --font-head: 'Oswald', sans-serif;
+            --metal-grey: #94a3b8;
+            --fastener-silver: #d1d5db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- ENHANCED REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo img { height: 45px; }
+
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav a { 
+            text-decoration: none; 
+            color: #334155; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.85rem;
+        }
+
+        /* --- HEXAGON TOGGLE --- */
+        .nav-toggle {
+            width: 45px;
+            height: 45px;
+            background: var(--metal-grey);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: 0.4s;
+        }
+
+        .nav-toggle .line-1 { transform: translateY(-6px); }
+        .nav-toggle .line-3 { transform: translateY(6px); }
+
+        .nav-toggle.open { transform: rotate(180deg); background: var(--primary-blue); }
+        .nav-toggle.open .line-1 { transform: rotate(45deg); }
+        .nav-toggle.open .line-2 { opacity: 0; }
+        .nav-toggle.open .line-3 { transform: rotate(-45deg); }
+
+
+         /* --- MOBILE --- */
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            transform: translateX(100%);
+            transition: 0.5s;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { color: white; font-size: 2rem; text-decoration: none; font-family: var(--font-head); }
+        .mobile-nav a:hover { color: var(--accent-copper); padding-left: 5px; }
+        @media (max-width: 992px) {
+            nav { display: none; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* --- FOOTER STYLES --- */
+.main-footer {
+    background: var(--bg-dark);
+    color: white;
+    padding: 80px 5% 20px;
+    margin-top: 50px;
+    border-top: 4px solid var(--accent-copper);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-brand p {
+    color: var(--metal-grey);
+    margin: 20px 0;
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.footer-logo {
+    height: 40px;
+    filter: brightness(0) invert(1); /* Makes the logo white for the dark background */
+}
+
+.iso-badge {
+    display: inline-block;
+    border: 1px solid var(--accent-copper);
+    color: var(--accent-copper);
+    padding: 5px 15px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.footer-grid h4 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: var(--metal-grey);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-copper);
+    padding-left: 5px;
+}
+
+.footer-contact p {
+    color: var(--metal-grey);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.footer-contact strong {
+    color: white;
+}
+
+.footer-bottom {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-brand p {
+        margin: 20px auto;
+    }
+}
+
+:root {
+    --primary-blue: #004a99;
+    --accent-copper: #d97706;
+    --font-head: 'Oswald', sans-serif;
+}
+
+/* --- THE CANVAS --- */
+.hexagon-canvas {
+    background-color: #0b0f1a;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%231e293b' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    padding: 100px 0;
+    min-height: 100vh;
+    color: #fff;
+}
+
+.content-gate { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* HERO */
+.integrated-hero { margin-bottom: 50px; }
+.hero-line { width: 50px; height: 3px; background: var(--accent-copper); margin-bottom: 15px; }
+.hero-label { font-family: var(--font-head); text-transform: uppercase; color: var(--accent-copper); font-size: 0.8rem; letter-spacing: 2px; }
+.integrated-hero h1 { font-family: var(--font-head); font-size: 3rem; text-transform: uppercase; margin: 10px 0; }
+.integrated-hero p { color: #94a3b8; max-width: 700px; line-height: 1.6; }
+
+/* SLABS */
+.utility-grid { display: grid; grid-template-columns: 280px 1fr; gap: 30px; margin-bottom: 40px; }
+.glass-slab { 
+    background: rgba(30, 41, 59, 0.6); 
+    backdrop-filter: blur(10px); 
+    padding: 30px; 
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+}
+.slab-edge { position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--primary-blue); }
+
+.glass-slab h3 { font-family: var(--font-head); text-transform: uppercase; margin-bottom: 20px; font-size: 1.2rem; }
+.side-links a { display: block; color: #94a3b8; text-decoration: none; padding: 8px 0; font-family: var(--font-head); text-transform: uppercase; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.side-links a:hover, .side-links a.active { color: var(--accent-copper); }
+.nav-group { display: block; margin-top: 15px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; color: #fff; }
+.sub-link { padding-left: 15px !important; opacity: 0.7; }
+
+/* CATALOG */
+.section-label { font-family: var(--font-head); text-transform: uppercase; margin: 40px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+.product-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.product-card { background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+.product-card:hover { border-color: var(--accent-copper); transform: translateY(-5px); background: rgba(30, 41, 59, 0.8); }
+
+.card-visual { height: 200px; background: #1e293b; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card-visual img { width: 100%; height: 100%; object-fit: cover; }
+.placeholder { color: #475569; font-family: var(--font-head); text-transform: uppercase; font-size: 0.8rem; }
+
+.card-content { padding: 20px; }
+.card-content h4 { font-family: var(--font-head); text-transform: uppercase; }
+.card-line { width: 20px; height: 2px; background: var(--accent-copper); margin-top: 8px; transition: 0.3s; }
+.product-card:hover .card-line { width: 100%; }
+
+/* --- RESPONSIVE FIX --- */
+@media (max-width: 900px) {
+    /* 1. Change grid to a single vertical stack */
+    .utility-grid { 
+        grid-template-columns: 1fr; 
+        gap: 20px; 
+    }
+
+    /* 2. Ensure the sidebar takes full width instead of vanishing */
+    .glass-slab.sidebar {
+        width: 100%;
+        order: 1; /* Moves it above the description */
+    }
+
+    /* 3. Adjust the links to be more "finger-friendly" for mobile */
+    .side-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns of links on mobile */
+        gap: 10px;
+    }
+
+    .side-links a {
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 12px;
+        text-align: center;
+        background: rgba(255,255,255,0.03);
+    }
+
+    /* 4. Stack the product cards */
+    .product-showcase {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    /* On very small phones, go back to one link per row */
+    .side-links {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+    <header>
+       <a href="index.html">
+        <div class="logo"><img src="CTSlogo.png" alt="Logo"/></div></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="industries.html">Industries</a></li>
+                <li><a href="equipmentcapabilities.html">Capabilities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" id="navToggle">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="industries.html">Industries</a>
+        <a href="equipmentcapabilities.html">Capabilities</a>
+        <a href="contact.html">Contact</a>
+    </div>
+<main class="hexagon-canvas" id="mainCanvas">
+    <div class="content-gate">
+        
+        <section class="integrated-hero">
+            <div class="hero-line"></div>
+            <div class="hero-label">Division: Fasteners & Hardware</div>
+            <h1>Central Tool Fasteners, LLC</h1>
+            <p>Sister company of Central Tool Specialties. Over 50 years of manufacturing excellence and high-volume inventory management.</p>
+        </section>
+
+        <div class="utility-grid">
+            
+            <aside class="glass-slab sidebar">
+                <div class="slab-edge"></div>
+                <h3>Inventory Catalog</h3>
+                <nav class="side-links">
+                    <a href="laminations.html">Laminations</a>
+                    <span class="nav-group">Flexible Connectors</span>
+                    <a href="flatbraid.html" class="sub-link">Flat Braided</a>
+                    <a href="ropebraid.html" class="sub-link">Rope Braided</a>
+                    <a href="copperbusbar.html">Copper Bus Bar</a>
+                    <a href="fasteners.html" class="active">Fasteners</a>
+                </nav>
+            </aside>
+
+            <article class="glass-slab description">
+                <div class="slab-edge"></div>
+                <h3>Hardware Solutions</h3>
+                <p>We produce an exceedingly wide variety of hardware including <strong>washers, nuts, bolts, and cap screws</strong>. Our in-house production lines insure low prices and quick turnarounds.</p>
+                <p>Much of our hardware can be shipped the <strong>same day</strong> of a request due to our deep inventory on hand in Lombard, IL.</p>
+                <div class="industrial-callout">
+                    Serving assembly manufacturers, construction companies, and utility providers.
+                </div>
+            </article>
+        </div>
+
+        <h2 class="section-label">Inventory Catalog</h2>
+        <section class="product-showcase">
+            
+            <div class="product-card">
+                <div class="card-visual">
+                    <img src="screwsimg16.png" alt="Threaded Screw Products" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=placeholder>Screw Image</div>'">
+                </div>
+                <div class="card-content">
+                    <h4>Threaded Screw Products</h4>
+                    <div class="card-line"></div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-visual">
+                    <img src="CTFboltfastenerimg14.png" alt="Nuts and Bolts" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=placeholder>Hardware Image</div>'">
+                </div>
+                <div class="card-content">
+                    <h4>Nuts, Bolts & Washers</h4>
+                    <div class="card-line"></div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</main>
+
+ <footer class="main-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <img src="CTSlogo.png" alt="CTS Logo" class="footer-logo">
+            <p>Precision electrical connectors and copper components. Engineered for excellence since 1978.</p>
+            <div class="iso-badge">ISO 9001:2015 CERTIFIED</div>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Products</a></li>
+                <li><a href="contact.html">Request a Quote</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><strong>Address:</strong>1140 N. Dupage Ave,<br>Lombard, IL 60148</p>
+            <p><strong>Phone:</strong><a href="tel:(630)543-6351">(630) 543-6351</a></p>
+            <p><strong>Email:</strong> sales@centraltool.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Central Tool Specialties. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const toggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            mobileNav.classList.toggle('active');
+        });
+
+
+    window.addEventListener('scroll', () => {
+        const canvas = document.getElementById('mainCanvas');
+        let offset = window.pageYOffset;
+        // Minor background movement
+        canvas.style.backgroundPositionY = (offset * 0.1) + "px";
+    });
+
+    // Simple reveal without hiding content initially
+    const cards = document.querySelectorAll('.product-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+            }
+        });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => {
+        card.style.opacity = "0.8"; // Start slightly dimmed
+        card.style.transform = "translateY(10px)";
+        card.style.transition = "all 0.6s ease-out";
+        observer.observe(card);
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Central Tool Specialties | Precision Electrical Connectors</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
+    
+    <style>
+        :root {
+            --primary-blue: #004a99;
+            --accent-copper: #d97706;
+            --bg-dark: #0f172a;
+            --white: #ffffff;
+            --font-main: 'Inter', sans-serif;
+            --font-head: 'Oswald', sans-serif;
+            --metal-grey: #94a3b8;
+            --fastener-silver: #d1d5db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- ENHANCED REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo img { height: 45px; }
+
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav a { 
+            text-decoration: none; 
+            color: #334155; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.85rem;
+        }
+
+        /* --- HEXAGON TOGGLE --- */
+        .nav-toggle {
+            width: 45px;
+            height: 45px;
+            background: var(--metal-grey);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: 0.4s;
+        }
+
+        .nav-toggle .line-1 { transform: translateY(-6px); }
+        .nav-toggle .line-3 { transform: translateY(6px); }
+
+        .nav-toggle.open { transform: rotate(180deg); background: var(--primary-blue); }
+        .nav-toggle.open .line-1 { transform: rotate(45deg); }
+        .nav-toggle.open .line-2 { opacity: 0; }
+        .nav-toggle.open .line-3 { transform: rotate(-45deg); }
+
+        /* --- HERO SLIDER --- */
+
+        /* --- MOBILE --- */
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            transform: translateX(100%);
+            transition: 0.5s;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { color: white; font-size: 2rem; text-decoration: none; font-family: var(--font-head); }
+        .mobile-nav a:hover { color: var(--accent-copper); padding-left: 5px; }
+        @media (max-width: 992px) {
+            nav { display: none; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* --- FOOTER STYLES --- */
+.main-footer {
+    background: var(--bg-dark);
+    color: white;
+    padding: 80px 5% 20px;
+    margin-top: 50px;
+    border-top: 4px solid var(--accent-copper);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-brand p {
+    color: var(--metal-grey);
+    margin: 20px 0;
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.footer-logo {
+    height: 40px;
+    filter: brightness(0) invert(1); /* Makes the logo white for the dark background */
+}
+
+.iso-badge {
+    display: inline-block;
+    border: 1px solid var(--accent-copper);
+    color: var(--accent-copper);
+    padding: 5px 15px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.footer-grid h4 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: var(--metal-grey);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-copper);
+    padding-left: 5px;
+}
+
+.footer-contact p {
+    color: var(--metal-grey);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.footer-contact strong {
+    color: white;
+}
+
+.footer-bottom {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-brand p {
+        margin: 20px auto;
+    }
+}
+
+/* Container Utility */
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.about-wrapper {
+    background-color: rgb(255, 255, 255);
+    color: var(--white);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.about-hero {
+    padding: 120px 0 80px;
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(0,74,153,0.1), transparent);
+}
+
+.headline {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 8vw, 5rem);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    line-height: 0.9;
+    color: rgb(22, 1, 57);
+}
+
+.headline .highlight {
+    color: var(--accent-copper);
+}
+
+.sub-headline {
+    color: rgb(22, 1, 57);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Mission Section */
+.mission-section {
+    padding-bottom: 100px;
+}
+
+.mission-callout {
+    border-left: 5px solid var(--accent-copper);
+    padding: 20px 0 20px 40px;
+    max-width: 900px;
+}
+
+.mission-callout p {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--primary-blue);
+}
+
+/* Legacy Grid */
+.legacy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding-bottom: 120px;
+}
+
+.section-title {
+    font-family: var(--font-head);
+    color: var(--accent-copper);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.legacy-text p {
+    margin-bottom: 20px;
+    color: rgb(22, 1, 57);
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #334155;
+    padding: 60px;
+    text-align: center;
+    position: relative;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 6rem;
+    color: var(--accent-copper);
+    line-height: 1;
+}
+
+.stat-label {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgb(22, 1, 57);
+}
+
+/* Pillars Section */
+.pillars-section {
+    background-color: rgba(255,255,255,0.02);
+    padding: 100px 0;
+}
+
+.centered-title {
+    text-align: center;
+    font-family: var(--font-head);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+    color: rgb(22, 1, 57);
+}
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.pillar-card {
+    padding: 40px;
+    background: var(--bg-dark);
+    border: 1px solid #1e293b;
+    transition: 0.4s ease;
+}
+
+.pillar-card:hover {
+    border-color: var(--accent-copper);
+    transform: translateY(-10px);
+}
+
+.pillar-icon {
+    font-family: var(--font-head);
+    color: var(--primary-blue);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.pillar-card h3 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: var(--accent-copper);
+}
+
+/* Fulfillment Banner */
+.fulfillment-banner {
+    background-color: var(--primary-blue);
+    padding: 80px 40px;
+    text-align: center;
+}
+
+.fulfillment-banner h2 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.distribution-tag {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    border: 2px solid var(--white);
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .legacy-grid { grid-template-columns: 1fr; gap: 40px; }
+    .content-container { padding: 0 20px; }
+}
+    </style>
+</head>
+<body>
+
+    <header>
+       <a href="index.html">
+        <div class="logo"><img src="CTSlogo.png" alt="Logo"/></div></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="industries.html">Industries</a></li>
+                <li><a href="equipmentcapabilities.html">Capabilities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" id="navToggle">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="industries.html">Industries</a>
+        <a href="equipmentcapabilities.html">Capabilities</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <main class="about-wrapper">
+    <section class="about-hero">
+        <div class="content-container">
+            <h1 class="headline">About <span class="highlight">Central Tool</span></h1>
+            <p class="sub-headline">Precision Engineering Since the 1980s</p>
+        </div>
+    </section>
+
+    <section class="mission-section">
+        <div class="content-container">
+            <div class="mission-callout">
+                <p>At Central Tool Specialties, our mission is simple: we are completely dedicated to the customer, serving your individual needs with ideal product solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="legacy-grid content-container">
+        <div class="legacy-text">
+            <h2 class="section-title">Decades of Mastery</h2>
+            <p>Built upon a solid foundation of <strong>40+ years of experience</strong> in the manufacturing sector, Central Tool is uniquely positioned to provide expertise and capabilities.</p>
+            <p>Our history isn't just about longevity; it's about a deep-seated understanding of industrial evolution. We have spent four decades refining our processes, moving from traditional machining techniques to modern, high-precision standards that meet demanding specifications.</p>
+        </div>
+        <div class="legacy-visual">
+            <div class="stat-card">
+                <span class="stat-number">40+</span>
+                <span class="stat-label">Years of Innovation</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="pillars-section">
+        <div class="content-container">
+            <h2 class="centered-title">Your End-to-End Partner</h2>
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">01</div>
+                    <h3>Design Assistance</h3>
+                    <p>We collaborate during the initial stages to optimize products for better performance and manufacturability, ensuring your designs are production-ready.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">02</div>
+                    <h3>Expert Manufacturing</h3>
+                    <p>Bringing complex concepts to life with exacting precision. Our shop utilizes advanced technology and rigorous quality control for every run.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">03</div>
+                    <h3>Rapid Delivery</h3>
+                    <p>Logistics optimized for speed. We understand that in this industry, downtime is a liability, so we move as fast as you do.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="fulfillment-banner">
+        <div class="content-container">
+            <h2>Speed, Scale, and Reliability</h2>
+            <p>We are committed to competitive pricing and the fastest response times in the industry. Products can ship <strong>same day</strong> as an order if material is in stock.</p>
+            <div class="distribution-tag">Networked throughout the US & Canada</div>
+        </div>
+    </section>
+</main>
+    <footer class="main-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <img src="CTSlogo.png" alt="CTS Logo" class="footer-logo">
+            <p>Precision electrical connectors and copper components. Engineered for excellence since 1978.</p>
+            <div class="iso-badge">ISO 9001:2015 CERTIFIED</div>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Products</a></li>
+                <li><a href="contact.html">Request a Quote</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><strong>Address:</strong>1140 N. Dupage Ave,<br>Lombard, IL 60148</p>
+            <p><strong>Phone:</strong><a href="tel:(630)543-6351">(630) 543-6351</a></p>
+            <p><strong>Email:</strong> sales@centraltool.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Central Tool Specialties. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    <script>
+        const toggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            mobileNav.classList.toggle('active');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const counter = entry.target.querySelector('.count');
+                    if (counter) startCounter(counter);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function startCounter(el) {
+            if (el.classList.contains('counted')) return;
+            el.classList.add('counted');
+            const target = +el.getAttribute('data-target');
+            let current = 0;
+            const update = () => {
+                current += target / 100;
+                if (current < target) {
+                    el.innerText = Math.ceil(current);
+                    requestAnimationFrame(update);
+                } else {
+                    el.innerText = target;
+                }
+            };
+            update();
+        }
+
+        // 3D Tilt Logic
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateX = (y - (rect.height/2)) / 12;
+                const rotateY = ((rect.width/2) - x) / 12;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = `rotateX(0) rotateY(0)`);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    }, observerOptions);
+
+    // Elements to animate
+    const targets = document.querySelectorAll('.pillar-card, .stat-card, .legacy-text, .mission-callout');
+    
+    targets.forEach(el => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "all 0.8s cubic-bezier(0.2, 1, 0.3, 1)";
+        observer.observe(el);
+    });
+
+    // Handle visible state via CSS injection or class
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .is-visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    `;
+    document.head.appendChild(style);
+});
+    </script>
+</body>
+</html>
